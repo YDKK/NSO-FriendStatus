@@ -1,0 +1,11 @@
+{
+  "profiles": {
+    "NSO-FriendStatus (Package)": {
+      "commandName": "MsixPackage",
+      "nativeDebugging": true
+    },
+    "NSO-FriendStatus (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
