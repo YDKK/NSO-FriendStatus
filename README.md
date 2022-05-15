@@ -1,6 +1,6 @@
-# NSO-FriendStatus
+# [WIP] NSO-FriendStatus
 
-Nintendo Switch OnlineのフレンドのステータスをPC上で確認することが可能なWinUI 3製アプリです。
+Nintendo Switch OnlineのフレンドのステータスをPC上で確認することが可能なWinUI 3製アプリ
 
 ## 機能
 
@@ -20,9 +20,18 @@ npm install --global nxapi
 nxapi nso auth
 ```
 
+配布可能な形式のパッケージは現在準備中です。
+
+## 使い方
+
 アプリケーションを起動するとタスクトレイに常駐します。  
 起動後はフレンドのステータスを1分間隔で確認し、フレンドが新たにオンラインになった際に通知します。  
 終了するにはタスクトレイのアイコンを右クリックして終了させてください。
+
+## TODO
+
+- [ ] 配布可能なパッケージの作成
+  - もしくはUnpackedでも実行できるようにする
 
 ## License
 
