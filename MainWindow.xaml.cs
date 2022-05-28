@@ -81,23 +81,38 @@ namespace NSO_FriendStatus
 
         private void UpdateFriends()
         {
-            var psi = new ProcessStartInfo
+            Friend[] onlineFriends;
+            Friend[] offlineFriends;
+            string json = null;
+
+            try
             {
-                UseShellExecute = false,
-                RedirectStandardOutput = true,
-                CreateNoWindow = true,
-                StandardOutputEncoding = Encoding.UTF8,
-                FileName = "nxapi.cmd",
-                Arguments = "nso friends --json"
-            };
-            var process = Process.Start(psi);
+                var psi = new ProcessStartInfo
+                {
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = true,
+                    StandardOutputEncoding = Encoding.UTF8,
+                    FileName = "nxapi.cmd",
+                    Arguments = "nso friends --json"
+                };
+                var process = Process.Start(psi);
 
-            var json = process.StandardOutput.ReadToEnd();
-            process.WaitForExit();
+                json = process.StandardOutput.ReadToEnd();
+                process.WaitForExit();
 
-            var allFriends = JsonDocument.Parse(json).RootElement.EnumerateArray().Select(x => x.Deserialize<Friend>()).ToArray();
-            var onlineFriends = allFriends.Where(x => x.presence.IsOnline).ToArray();
-            var offlineFriends = allFriends.Where(x => !x.presence.IsOnline).ToArray();
+                var allFriends = JsonDocument.Parse(json).RootElement.EnumerateArray().Select(x => x.Deserialize<Friend>()).ToArray();
+                onlineFriends = allFriends.Where(x => x.presence.IsOnline).ToArray();
+                offlineFriends = allFriends.Where(x => !x.presence.IsOnline).ToArray();
+            }
+            catch (Exception ex)
+            {
+                //TODO
+                Debug.WriteLine(json);
+                Debug.WriteLine(ex);
+                Debug.WriteLine(ex.Message);
+                return;
+            }
 
             if (EnableOnlineNotify)
             {
